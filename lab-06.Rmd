@@ -27,10 +27,30 @@ diamonds <- diamonds %>% rename(
 ## Exercise 1
 
 ```{r}
-# Do some preliminary investigations & cleaning
+diamonds %>%
+  group_by(length_mm, width_mm, depth_mm) %>%
+  summarise(freq = n())     #Checking for how many diamonds have and dimension of 0
 
+DiamondsDimensions <- diamonds %>%
+  filter(length_mm > 0.00) %>%
+  filter(width_mm > 0.00) %>%
+  filter(depth_mm > 0.00)
+  
+DiamondsDimensions %>%
+  group_by(length_mm, width_mm, depth_mm) %>%
+  summarise(freq = n())     #No longer any dimensions with the value 0
 
+DiamondsDimensions %>%
+  ggplot(mapping = aes(x = cut, y = price)) +
+  geom_bar(stat = "identity")  
 
+ggplot(diamonds) + 
+  geom_histogram(aes(x = carat))
+
+ggplot(data = diamonds,
+       mapping = aes(x = width_mm,
+                     y = depth_mm)) +
+  geom_point()
 
 ```
 
@@ -42,14 +62,16 @@ diamonds <- diamonds %>% rename(
 diamonds <- diamonds %>%
   mutate(table_mm = table_pct * width_mm / 100)
 
-# Overall table_mm arithmetic mean?
+diamonds %>%
+  group_by(clarity) %>%
+  
 
 
 
 
 
 
-# table_mm arithmetic mean within each clarity category
+
 
 
 
